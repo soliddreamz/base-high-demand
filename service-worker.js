@@ -1,4 +1,4 @@
-const CACHE_VERSION = "high-demand-v1";
+const CACHE_VERSION = "high-demand-v2";
 const CACHE_NAME = `base-cache-${CACHE_VERSION}`;
 
 const CORE_ASSETS = [
