@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>High Demand EST. 2022 — Official App</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+  :root{
+    --bg1:#0c1c3a;
+    --bg2:#050b18;
+    --card:rgba(255,255,255,0.06);
+    --text:#eaf1ff;
+    --muted:rgba(234,241,255,0.72);
+    --btn1:#3b82f6;
+    --btn2:#2563eb;
+    --stroke:rgba(255,255,255,0.10);
+    --good:#22c55e;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:radial-gradient(circle at top, var(--bg1), var(--bg2));
+    color:var(--text);
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-align:center;
+    padding:18px 14px 22px;
+  }
+  .wrap{ max-width:500px; margin:0 auto; }
+  .card{
+    background:var(--card);
+    border:1px solid var(--stroke);
+    border-radius:22px;
+    padding:18px 16px 16px;
+    box-shadow:0 18px 50px rgba(0,0,0,0.40);
+    backdrop-filter: blur(10px);
+  }
+  .logo{
+    width:min(260px, 86vw);
+    height:auto;
+    display:block;
+    margin:2px auto 8px;
+    border-radius:18px;
+    background:#fff;
+  }
+  .title{
+    margin:6px 0 4px;
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:0.2px;
+  }
+  .desc{
+    margin:6px auto 14px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.35;
+    max-width:420px;
+  }
+
+  .tabs{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin:12px 0 10px;
+    flex-wrap:wrap;
+  }
+  .tabBtn{
+    appearance:none;
+    border:none;
+    border-radius:999px;
+    padding:10px 12px;
+    font-size:13px;
+    font-weight:800;
+    color:rgba(234,241,255,0.88);
+    background:rgba(0,0,0,0.18);
+    border:1px solid rgba(255,255,255,0.10);
+    cursor:pointer;
+  }
+  .tabBtn.active{
+    color:#fff;
+    background:linear-gradient(135deg,var(--btn1),var(--btn2));
+    border-color:rgba(255,255,255,0.06);
+    box-shadow:0 10px 28px rgba(59,130,246,0.25);
+  }
+
+  .section{ display:none; text-align:left; }
+  .section.active{ display:block; }
+
+  .row{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+
+  button.primary{
+    appearance:none;
+    border:none;
+    border-radius:14px;
+    padding:13px 14px;
+    min-width:150px;
+    font-size:15px;
+    font-weight:900;
+    color:white;
+    background:linear-gradient(135deg,var(--btn1),var(--btn2));
+    box-shadow:0 10px 28px rgba(59,130,246,0.35);
+    cursor:pointer;
+  }
+  button.secondary{
+    appearance:none;
+    border-radius:14px;
+    padding:13px 14px;
+    min-width:150px;
+    font-size:15px;
+    font-weight:900;
+    color:white;
+    background:linear-gradient(135deg,#172554,#0b1220);
+    box-shadow:none;
+    border:1px solid rgba(255,255,255,0.10);
+    cursor:pointer;
+  }
+  button:active{ transform:scale(0.98); }
+
+  .playerCard{
+    margin-top:10px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(0,0,0,0.16);
+    border-radius:18px;
+    padding:12px;
+  }
+
+  .list{
+    margin-top:12px;
+    display:grid;
+    gap:10px;
+  }
+  .track{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    padding:12px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    cursor:pointer;
+    user-select:none;
+  }
+  .track:active{ transform:scale(0.99); }
+  .track .tCover{
+    width:46px; height:46px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.10);
+    overflow:hidden;
+    flex:0 0 auto;
+    display:grid;
+    place-items:center;
+    color:rgba(234,241,255,0.70);
+    font-weight:900;
+    font-size:14px;
+  }
+  .track .tText{ flex:1; min-width:0; }
+  .track .tTitle{
+    font-weight:900;
+    font-size:14px;
+    margin:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .track .tSub{
+    margin-top:2px;
+    font-size:12px;
+    color:rgba(234,241,255,0.70);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .pill{
+    font-size:11px;
+    font-weight:900;
+    padding:6px 8px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(0,0,0,0.18);
+    color:rgba(234,241,255,0.82);
+    flex:0 0 auto;
+  }
+
+  .adSlot{
+    margin-top:12px;
+    border-radius:18px;
+    border:1px dashed rgba(255,255,255,0.22);
+    background:rgba(0,0,0,0.14);
+    padding:12px;
+    text-align:center;
+  }
+  .adLabel{
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0.6px;
+    color:rgba(234,241,255,0.60);
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .adInner{
+    border-radius:14px;
+    padding:12px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    color:rgba(234,241,255,0.80);
+    font-size:13px;
+    line-height:1.3;
+  }
+
+  .status{
+    margin-top:10px;
+    color:rgba(234,241,255,0.72);
+    font-size:13px;
+    min-height:18px;
+    text-align:center;
+  }
+  .mini{
+    font-size:11px;
+    color:rgba(234,241,255,0.55);
+    text-align:center;
+    margin-top:10px;
+  }
+
+  .badge{
+    display:inline-flex;
+    gap:6px;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:900;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(0,0,0,0.18);
+    color:rgba(234,241,255,0.82);
+  }
+  .dot{ width:8px; height:8px; border-radius:999px; background:var(--good); display:inline-block; }
+
+  .noteBox{
+    margin-top:10px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(0,0,0,0.14);
+    padding:12px;
+    text-align:center;
+    color:rgba(234,241,255,0.78);
+    font-size:13px;
+    line-height:1.35;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at center, transparent 58%, rgba(0,0,0,0.35)),
+      repeating-linear-gradient(to bottom,
+        rgba(255,255,255,0.02), rgba(255,255,255,0.02) 1px,
+        transparent 2px, transparent 4px
+      );
+    mix-blend-mode:overlay;
+  }
+</style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <img src="high-demand.png" class="logo" alt="High Demand logo" onerror="this.style.display='none';" />
+
+      <div class="title">High Demand EST. 2022</div>
+      <div class="desc">
+        Official app — brand updates and direct links. No algorithm. Just High Demand.
+      </div>
+
+      <div class="row" style="margin-bottom:8px;">
+        <div class="badge"><span class="dot"></span> Powered by Base</div>
+      </div>
+
+      <div class="tabs">
+        <button class="tabBtn active" data-tab="home">Home</button>
+        <button class="tabBtn" data-tab="listen">Listen</button>
+        <button class="tabBtn" data-tab="about">About</button>
+      </div>
+
+      <div id="tab-home" class="section active">
+        <div class="row" style="margin-top:6px;">
+          <button id="goLinks" class="primary">🔗 Open Links</button>
+          <button id="installBtn" class="secondary" style="display:none;">➕ Install App</button>
+        </div>
+
+        <div class="playerCard" style="margin-top:12px;">
+          <div style="font-weight:900; font-size:14px; text-align:center;">What this is</div>
+          <div style="margin-top:6px; color:rgba(234,241,255,0.72); font-size:13px; line-height:1.35; text-align:center;">
+            This is the official High Demand EST. 2022 hub — direct links, updates, and access in one place.
+          </div>
+        </div>
+
+        <div class="adSlot">
+          <div class="adLabel">Ad</div>
+          <div class="adInner">
+            Pilot Banner Slot (optional).<br/>
+            Brand-safe only. No tracking of personal supporter data.
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-listen" class="section">
+        <div class="playerCard">
+          <div style="font-weight:900; font-size:14px; text-align:center;">Links</div>
+
+          <div id="openHint" class="noteBox" style="display:none;">
+            <div id="openHintText">Tap <b>Open Link</b>.</div>
+            <div class="row" style="margin-top:10px;">
+              <button id="openExternalBtn" class="primary">🔗 Open Link</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="adSlot">
+          <div class="adLabel">Ad</div>
+          <div class="adInner">
+            Pilot Banner Slot — replace with sponsor image later.
+          </div>
+        </div>
+
+        <div class="list" id="trackList" aria-label="Link list"></div>
+      </div>
+
+      <div id="tab-about" class="section">
+        <div class="playerCard">
+          <div style="font-weight:900; font-size:14px; text-align:center;">High Demand EST. 2022</div>
+          <div style="margin-top:6px; color:rgba(234,241,255,0.72); font-size:13px; line-height:1.35; text-align:center;">
+            <b>High Demand EST. 2022</b> is a brand built for people who move with purpose.<br/>
+            No algorithm — just direct support and official updates in one place.
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <span class="pill">Brand-owned</span>
+            <span class="pill">Direct access</span>
+            <span class="pill">No algorithm</span>
+          </div>
+        </div>
+
+        <div class="playerCard" style="margin-top:12px;">
+          <div style="font-weight:900; font-size:14px; text-align:center;">Ads</div>
+          <div style="margin-top:6px; color:rgba(234,241,255,0.72); font-size:13px; line-height:1.35; text-align:center;">
+            Ads are optional. For this pilot we keep them light and brand-safe.
+          </div>
+        </div>
+      </div>
+
+      <div id="status" class="status">Ready.</div>
+      <div class="mini">V1 Lite Pilot • No accounts • No uploads</div>
+    </div>
+  </div>
+
+<script>
+const statusEl = document.getElementById('status');
+const tabs = document.querySelectorAll('.tabBtn');
+const sections = {
+  home: document.getElementById('tab-home'),
+  listen: document.getElementById('tab-listen'),
+  about: document.getElementById('tab-about')
+};
+
+const goLinksBtn = document.getElementById('goLinks');
+const installBtn = document.getElementById('installBtn');
+
+const trackListEl = document.getElementById('trackList');
+const openHint = document.getElementById('openHint');
+const openHintText = document.getElementById('openHintText');
+const openExternalBtn = document.getElementById('openExternalBtn');
+
+let tracks = [];
+let deferredPrompt = null;
+let currentExternalUrl = null;
+
+function setStatus(t){ statusEl.textContent = t; }
+
+function showTab(tab){
+  tabs.forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  Object.keys(sections).forEach(k => sections[k].classList.toggle('active', k === tab));
+}
+
+tabs.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
+goLinksBtn.addEventListener('click', () => showTab('listen'));
+
+openExternalBtn.addEventListener('click', () => {
+  if(!currentExternalUrl) return;
+  window.open(currentExternalUrl, '_blank', 'noopener,noreferrer');
+});
+
+function escapeHtml(s){
+  return String(s || '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'","&#039;");
+}
+
+function renderTracks(){
+  trackListEl.innerHTML = '';
+  tracks.forEach((t, i) => {
+    const item = document.createElement('div');
+    item.className = 'track';
+    item.setAttribute('role','button');
+    item.setAttribute('tabindex','0');
+
+    const coverHtml = `<div style="display:grid;place-items:center;width:100%;height:100%;">🔗</div>`;
+
+    item.innerHTML = `
+      <div class="tCover">${coverHtml}</div>
+      <div class="tText">
+        <p class="tTitle">${escapeHtml(t.title || 'Untitled')}</p>
+        <div class="tSub">${escapeHtml(t.subtitle || '')}</div>
+      </div>
+      <span class="pill">${escapeHtml(t.tag || 'Open')}</span>
+    `;
+
+    item.addEventListener('click', () => openIndex(i));
+    item.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') openIndex(i);
+    });
+
+    trackListEl.appendChild(item);
+  });
+
+  if(tracks.length){
+    setStatus('Ready. Tap a link.');
+  }else{
+    setStatus('No links found. Add links to content.json.');
+  }
+}
+
+function openIndex(i){
+  const t = tracks[i];
+  if(!t) return;
+
+  showTab('listen');
+  currentExternalUrl = t.url || null;
+
+  openHint.style.display = 'block';
+  const label = t.title ? escapeHtml(t.title) : 'this link';
+  openHintText.innerHTML = `This opens <b>${label}</b> in a new tab.<br/>Tap <b>Open Link</b>.`;
+  setStatus('Tap Open Link.');
+}
+
+async function loadContent(){
+  try{
+    setStatus('Loading…');
+    const res = await fetch('content.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error('content.json not found');
+    const json = await res.json();
+    tracks = Array.isArray(json.tracks) ? json.tracks : [];
+    // Keep only external links in Lite mode (guardrail)
+    tracks = tracks.filter(t => !!t.external && !!t.url);
+    renderTracks();
+    setStatus('Ready.');
+  }catch(err){
+    console.error(err);
+    setStatus('Could not load content.json. Make sure it exists in the same folder.');
+  }
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'inline-block';
+});
+
+installBtn.addEventListener('click', async () => {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  try{ await deferredPrompt.userChoice; }catch(e){}
+  deferredPrompt = null;
+  installBtn.style.display = 'none';
+});
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+  });
+}
+
+showTab('home');
+loadContent();
+setStatus('Ready.');
+</script>
+</body>
+</html>
