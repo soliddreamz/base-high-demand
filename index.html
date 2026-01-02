@@ -391,7 +391,8 @@ goLinksBtn.addEventListener('click', () => showTab('listen'));
 
 openExternalBtn.addEventListener('click', () => {
   if(!currentExternalUrl) return;
-  window.open(currentExternalUrl, '_blank', 'noopener,noreferrer');
+  // iPhone PWA fix: open in same tab so Back returns to the app reliably
+  window.location.assign(currentExternalUrl);
 });
 
 function escapeHtml(s){
